@@ -42,8 +42,7 @@ def ConnectToClient(myName, clientName, serverIP, serverPort=defaultPort,
             sock.sendto(data.encode('utf-8'), (serverIP, serverPort))
             break
         else:
-        	return None
-        print(serverID)
+            return None
     return sock, (clientIP, clientPort)
 
 
