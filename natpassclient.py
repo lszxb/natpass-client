@@ -15,7 +15,8 @@ def ConnectToClient(myName, clientName, serverIP, serverPort=defaultPort,
     clientPort = None
     serverID = None
     while True:
-        response = sock.recv(1024).decode('utf-8').split('\n')
+        response, addr = sock.recvfrom(1024)
+        response = response.decode('utf-8').split('\n')
         if response[0] == 'wait':
             serverID = response[1]
             data = 'done\n' + myName
@@ -29,6 +30,8 @@ def ConnectToClient(myName, clientName, serverIP, serverPort=defaultPort,
             sock.sendto(data.encode('utf-8'), (serverIP, serverPort))
         elif response[0] == 'hello' and response[-1] == clientName:
             data = 'welcome\n' + myName
+            clientIP = addr[0]
+            clientPort = addr[1]
             sock.sendto(data.encode('utf-8'), (clientIP, clientPort))
         elif response[0] == 'welcome' and response[-1] == clientName:
             data = 'sure\n' + myName
@@ -40,6 +43,7 @@ def ConnectToClient(myName, clientName, serverIP, serverPort=defaultPort,
             break
         else:
         	return None
+        print(serverID)
     return sock, (clientIP, clientPort)
 
 
