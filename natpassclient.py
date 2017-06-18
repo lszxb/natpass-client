@@ -9,7 +9,7 @@ defaultPort = 7989
 
 def ConnectToClient(myName, clientName, serverIP, serverPort=defaultPort,
                     sock=socket.socket(socket.AF_INET, socket.SOCK_DGRAM)):
-    data = 'request\n' + myName + '\n' + clientName
+    data = 'request\n' + clientName + '\n' + myName
     sock.sendto(data.encode('utf-8'), (serverIP, serverPort))
     clientIP = None
     clientPort = None
